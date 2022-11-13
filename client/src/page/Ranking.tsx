@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
+import { useState, useEffect, useCallback } from "react";
 import { getUsers } from "../api/api";
 import UserCard from "./UserCard";
 
@@ -13,9 +12,16 @@ const Ranking = () => {
     load();
   }, []);
 
-  return <Container>
-    {users.map((user: any) => <UserCard key={user.id} user={user}></UserCard>)}
-  </Container>
+  const user_cards = useCallback(() => {
+    return users.map((user: any) => <UserCard key={user.id} user={user}></UserCard>)
+  }, [users]);
+
+  return <>
+    <h4 className='mb-4 text-center'>
+      Who has the best humor?
+    </h4>
+    {user_cards()}
+  </>;
 }
 
 export default Ranking;

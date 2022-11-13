@@ -20,10 +20,11 @@ const Header = () => {
           width="30"
           height="30"
           alt="logo"
-        />{' '}
-        Jihoon
+        />
+        {' '}
+        Humor
       </Navbar.Brand>
-      <Nav>등록</Nav>
+      <Nav>New</Nav>
     </Container>
   </Navbar>
 }

@@ -13,7 +13,9 @@ const UserCard = (props: any) => {
   return <div className='mb-2 d-grid'>
     <Button
       variant='light'
-      onClick={() => { routeChange(user.id) }}>{user.name}
+      onClick={() => { routeChange(user.id) }}
+    >
+      {user.name}
     </Button>
   </div>
 }

@@ -16,7 +16,7 @@ const UserCard = (props: any) => {
       <div className="align-self-center">
         {user.name}
       </div>
-      <Rating defaultValue={2.65} precision={0.1} readOnly size='small' className="align-self-center" />
+      <Rating defaultValue={user.score} precision={0.1} readOnly size='small' className="align-self-center" />
     </Card.Body>
   </Card>
 }

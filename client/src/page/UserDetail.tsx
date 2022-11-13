@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { getUser, getHumorsByUser } from '../api/api';
-import HumorCard from './HumorCard';
+import HumorCard from '../component/HumorCard';
 
 const UserDetail = (props: any) => {
   const { user_id } = useParams();

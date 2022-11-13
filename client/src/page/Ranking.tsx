@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { getUsers } from "../api/api";
-import UserCard from "./UserCard";
+import UserCard from "../component/UserCard";
 
 const Ranking = () => {
   const [users, set_users] = useState([]);

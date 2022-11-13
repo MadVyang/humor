@@ -36,3 +36,13 @@ export async function getHumorsByUser(user_id: string | undefined): Promise<any[
   }
   return [];
 };
+export async function postHumor(user_id: string, humor: string, score: Number): Promise<any> {
+  try {
+    const body = { user_id: user_id, humor: humor, score: score };
+    await axios.post(info.url + `/humor`, body, { headers: { 'Content-Type': 'application/json' } });
+    return true;
+  } catch (err) {
+    console.log(err);
+  }
+  return false;
+};

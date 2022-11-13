@@ -1,12 +1,39 @@
-// import { useNavigate } from "react-router-dom";
-// import { useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from "react-bootstrap/esm/Button";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { Rating } from '@mui/material';
+import { getUsers, postHumor } from '../api/api';
 
 const RegisterModal = (props: any) => {
+  const [users, set_users] = useState([]);
+  const [selected_user_id, set_selected_user_id] = useState('0');
+  const [humor, set_humor] = useState('');
+  const [score, set_score] = useState(5);
+
+  useEffect(() => {
+    async function load() {
+      const _users = await getUsers();
+      set_users(_users);
+    }
+    load();
+  }, []);
+
+  const userOptions = useCallback(() => {
+    return users.map((user: any) => <option key={user.id} value={user.id}>{user.name}</option>);
+  }, [users]);
+
+  const register = useCallback(() => {
+    async function load() {
+      await postHumor(selected_user_id, humor, score);
+    }
+    load();
+    if (humor.length > 0) {
+      props.onHide();
+    }
+  }, [selected_user_id, humor, score, props]);
+
   return <Modal {...props} centered>
     <Modal.Header closeButton>
       <Modal.Title>
@@ -16,25 +43,28 @@ const RegisterModal = (props: any) => {
     <Modal.Body>
       <div className='mb-2 d-flex justify-content-between'>
         Who's humor?
-        <Form.Select size="sm" className="w-50">
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+        <Form.Select size="sm" className="w-50"
+          onChange={e => { set_selected_user_id(e.target.value) }}
+        >
+          {userOptions()}
         </Form.Select>
       </div>
       <FloatingLabel label="Humor">
         <Form.Control
           as="textarea"
           placeholder="Leave a comment here"
-          style={{ height: '100px' }}
+          style={{ height: '200px' }}
+          onChange={e => { set_humor(e.target.value); }}
         />
       </FloatingLabel>
       <div className='d-flex justify-content-end' >
-        <Rating defaultValue={0} precision={0.5} />
+        <Rating defaultValue={5} precision={0.5}
+          onChange={(e, value) => { set_score(value ?? 0); }}
+        />
       </div>
     </Modal.Body>
     <Modal.Footer>
-      <Button variant="secondary" onClick={() => { }}>Register</Button>
+      <Button variant="secondary" onClick={register}>Register</Button>
     </Modal.Footer>
   </Modal>
 }

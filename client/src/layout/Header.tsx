@@ -30,7 +30,8 @@ const Header = () => {
       <Nav onClick={() => set_is_register_open(true)}>New</Nav>
       <RegisterModal
         show={is_register_open}
-        onHide={() => set_is_register_open(false)}>
+        onHide={() => set_is_register_open(false)}
+      >
       </RegisterModal>
     </Container>
   </Navbar>

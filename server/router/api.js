@@ -28,4 +28,15 @@ export default (app, db) => {
       res.sendStatus(400);
     }
   });
+
+  app.post('/api/humor', async (req, res) => {
+    try {
+      const { user_id, humor, score } = req.body;
+      await db.postHumor(user_id, humor, score);
+      res.sendStatus(200);
+    } catch (error) {
+      console.log('getUser', error);
+      res.sendStatus(400);
+    }
+  });
 };

@@ -17,3 +17,8 @@ export const getHumorsByUser = async (user_id) => {
   const result = await pool.query(`SELECT * FROM user_humor WHERE user_id = ${user_id}`);
   return result.rows;
 };
+
+export const postHumor = async (user_id, humor, score) => {
+  const result = await pool.query(`INSERT INTO humor(user_id, content, score) VALUES(${user_id}, '${humor}', ${score})`);
+  return result;
+};

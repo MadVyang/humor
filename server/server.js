@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import api_router from './router/api.js';
 import cors_white_list from './cors_white_list.js';
+import bodyParser from 'body-parser';
 import * as db from './db/db.js';
 
 
@@ -19,6 +20,8 @@ app.use(cors({
   },
   credentials: true
 }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 api_router(app, db);
 

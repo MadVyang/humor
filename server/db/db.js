@@ -9,12 +9,12 @@ export const getUser = async (user_id) => {
 };
 
 export const getUsers = async () => {
-  const result = await pool.query('SELECT * FROM public.user');
+  const result = await pool.query('SELECT * FROM public.user ORDER BY id');
   return result.rows;
 };
 
 export const getHumorsByUser = async (user_id) => {
-  const result = await pool.query(`SELECT * FROM user_humor WHERE user_id = ${user_id}`);
+  const result = await pool.query(`SELECT * FROM user_humor WHERE user_id = ${user_id} ORDER BY humor_id`);
   return result.rows;
 };
 

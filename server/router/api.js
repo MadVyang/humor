@@ -1,3 +1,21 @@
 export default (app, db) => {
-  app.get('/api/users', db.getUsers);
+  app.get('/api/users', async (req, res) => {
+    try {
+      const result = await db.getUsers();
+      res.status(200).json(result);
+    } catch (error) {
+      console.log('getUsers', error);
+      res.sendStatus(400);
+    }
+  });
+
+  app.get('/api/humors/:user_id', async (req, res) => {
+    try {
+      const result = await db.getHumorsByUser(req.params.user_id);
+      res.status(200).json(result);
+    } catch (error) {
+      console.log('getHumorsByUser', error);
+      res.sendStatus(400);
+    }
+  });
 };

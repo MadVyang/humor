@@ -14,6 +14,7 @@ const server = app.listen(9000, function () {
   console.log("Express server has started on port 9000");
 });
 
+app.set('trust proxy', true);
 app.use(cors({
   origin: function (origin, callback) {
     callback(null, cors_white_list.indexOf(origin) !== -1);
@@ -27,6 +28,7 @@ api_router(app, db);
 
 app.use(express.static(path.join(__dirname, "../client/build")));
 app.get("*", (req, res) => {
+  console.log(req.ip, req.headers.referer);
   res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });
 

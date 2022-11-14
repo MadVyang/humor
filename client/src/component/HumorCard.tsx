@@ -9,7 +9,7 @@ const HumorCard = (props: any) => {
   return <Card className='mb-2 d-grid'>
     <Card.Body>
       <FaQuoteLeft className='mb-3' />
-      <div>
+      <div style={{ whiteSpace: "pre-line" }}>
         {humor.content}
       </div>
       <hr />

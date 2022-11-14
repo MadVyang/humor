@@ -10,7 +10,8 @@ import * as db from './db/db.js';
 
 const __dirname = path.resolve();
 const app = express();
-const server = app.listen(9000, function () {
+
+app.listen(9000, function () {
   console.log("Express server has started on port 9000");
 });
 
@@ -24,11 +25,15 @@ app.use(cors({
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use(function (req, res, next) {
+  console.log(new Date().toLocaleString(), "=>", req.ip, req.headers.referer);
+  next();
+});
+
 api_router(app, db);
 
 app.use(express.static(path.join(__dirname, "../client/build")));
 app.get("*", (req, res) => {
-  console.log(req.ip, req.headers.referer);
   res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });
 

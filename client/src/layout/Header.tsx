@@ -15,7 +15,7 @@ const Header = () => {
     navigate(path);
   }, [navigate]);
 
-  return <Navbar bg='light' className='mb-3'>
+  return <Navbar bg='light' fixed="top" >
     <Container>
       <Navbar.Brand onClick={navHome}>
         <img

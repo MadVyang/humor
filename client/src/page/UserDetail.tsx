@@ -27,7 +27,9 @@ const UserDetail = (props: any) => {
     <h4 className='mb-4 text-center'>
       {user.name}'s humor
     </h4>
-    {humor_cards()}
+    <div style={{ 'height': window.screen.availHeight - 160, 'overflowY': 'scroll' }}>
+      {humor_cards()}
+    </div>
   </>;
 }
 

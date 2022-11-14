@@ -10,7 +10,7 @@ function App() {
   return (
     <BrowserRouter>
       <Header></Header>
-      <Container>
+      <Container style={{ 'paddingTop': 80 }}>
         <Routes>
           <Route path="/" element={<Ranking />}></Route>
           <Route path="/user/:user_id" element={<UserDetail />}></Route>

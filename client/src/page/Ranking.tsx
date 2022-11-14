@@ -16,12 +16,14 @@ const Ranking = () => {
     return users.map((user: any) => <UserCard key={user.id} user={user}></UserCard>)
   }, [users]);
 
-  return <>
+  return <div>
     <h4 className='mb-4 text-center'>
       Who has the best humor?
     </h4>
-    {user_cards()}
-  </>;
+    <div style={{ 'height': window.screen.availHeight - 160, 'overflowY': 'scroll' }}>
+      {user_cards()}
+    </div>
+  </div>;
 }
 
 export default Ranking;

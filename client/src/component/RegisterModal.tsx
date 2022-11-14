@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from "react-bootstrap/esm/Button";
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
+import { FloatingLabel } from 'react-bootstrap';
 import { Rating } from '@mui/material';
 import { getUsers, postHumor } from '../api/api';
 
@@ -16,6 +16,7 @@ const RegisterModal = (props: any) => {
     async function load() {
       const _users = await getUsers();
       set_users(_users);
+      set_selected_user_id(_users[0].id);
     }
     load();
   }, []);
@@ -25,13 +26,15 @@ const RegisterModal = (props: any) => {
   }, [users]);
 
   const register = useCallback(() => {
+    if (humor.trim() === '') {
+      set_humor('');
+      return;
+    }
     async function load() {
-      await postHumor(selected_user_id, humor, score);
+      await postHumor(selected_user_id, humor.trim(), score);
     }
     load();
-    if (humor.length > 0) {
-      props.onHide();
-    }
+    props.onHide();
   }, [selected_user_id, humor, score, props]);
 
   return <Modal {...props} centered>
@@ -52,10 +55,12 @@ const RegisterModal = (props: any) => {
       <FloatingLabel label="Humor">
         <Form.Control
           as="textarea"
-          placeholder="Leave a comment here"
+          placeholder={`Leave his humor here`}
           style={{ height: '200px' }}
           onChange={e => { set_humor(e.target.value); }}
         />
+        <Form.Control.Feedback>Good</Form.Control.Feedback>
+        <Form.Control.Feedback type='invalid'>Invalid humor</Form.Control.Feedback>
       </FloatingLabel>
       <div className='d-flex justify-content-end' >
         <Rating defaultValue={5} precision={0.5}

@@ -45,7 +45,7 @@ const RegisterModal = (props: any) => {
     </Modal.Header>
     <Modal.Body>
       <div className='mb-2 d-flex justify-content-between'>
-        Who's humor?
+        Whose humor?
         <Form.Select size="sm" className="w-50"
           onChange={e => { set_selected_user_id(e.target.value) }}
         >

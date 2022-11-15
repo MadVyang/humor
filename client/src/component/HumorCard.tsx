@@ -14,7 +14,10 @@ const HumorCard = (props: any) => {
       </div>
       <hr />
       <div className='d-flex justify-content-end' >
-        <Rating defaultValue={Number(humor.score)} precision={0.5} readOnly size='small' />
+        <span style={{ fontSize: 15, verticalAlign: 'top' }}>
+          {humor.score}
+        </span>
+        <Rating defaultValue={Number(humor.score)} precision={0.5} readOnly size='small' style={{ position: 'relative', top: '1px', left: '5px' }} />
       </div>
     </Card.Body>
   </Card>

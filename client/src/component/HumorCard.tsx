@@ -21,7 +21,7 @@ const HumorCard = (props: any) => {
 
   return <Card className='mb-2 d-grid'>
     <Card.Body>
-      {img_src !== '' ? <div className='mb-4' style={{ height: '200px', overflowY: 'scroll' }}>
+      {img_src !== '' ? <div className='mb-4' style={{ height: '250px', overflowY: 'scroll' }}>
         <img src={img_src} alt='humor img' width='100%' height='auto'></img>
       </div> : ''}
       <FaQuoteLeft className='mb-3' />

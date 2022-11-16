@@ -21,13 +21,13 @@ const HumorCard = (props: any) => {
 
   return <Card className='mb-2 d-grid'>
     <Card.Body>
-      {img_src !== '' ? <div className='mb-4' style={{ height: '250px', overflowY: 'scroll' }}>
+      {img_src !== '' ? <div className='mb-4' style={{ overflowY: 'scroll' }}>
         <img src={img_src} alt='humor img' width='100%' height='auto'></img>
       </div> : ''}
-      <FaQuoteLeft className='mb-3' />
-      <div style={{ whiteSpace: "pre-line" }}>
+
+      {humor.content !== '' ? <><FaQuoteLeft className='mb-3' /> <div style={{ whiteSpace: "pre-line" }}>
         {humor.content}
-      </div>
+      </div></> : ''}
       <hr />
       <div className='d-flex justify-content-end' >
         <span style={{ fontSize: 15, verticalAlign: 'top' }}>

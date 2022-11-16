@@ -9,7 +9,7 @@ export const getUser = async (user_id) => {
 };
 
 export const getUsers = async () => {
-  const result = await pool.query('SELECT * FROM user_w_score ORDER BY score desc');
+  const result = await pool.query('SELECT * FROM user_w_score ORDER BY score desc, num_humor desc');
   return result.rows;
 };
 

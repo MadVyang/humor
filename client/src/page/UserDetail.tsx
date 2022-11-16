@@ -24,10 +24,10 @@ const UserDetail = (props: any) => {
   }, [humors]);
 
   return <>
-    <h4 className='mb-4 text-center'>
+    <h4 className='mb-3 text-center'>
       {user.name}'s humor
     </h4>
-    <div style={{ 'height': window.screen.availHeight - 160, 'overflowY': 'scroll' }}>
+    <div style={{ 'height': '75vh', 'overflowY': 'scroll' }}>
       {humor_cards()}
     </div>
   </>;

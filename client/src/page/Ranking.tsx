@@ -17,10 +17,10 @@ const Ranking = () => {
   }, [users]);
 
   return <div>
-    <h4 className='mb-4 text-center'>
+    <h4 className='mb-3 text-center'>
       Who has the best humor?
     </h4>
-    <div style={{ 'height': window.screen.availHeight - 160, 'overflowY': 'scroll' }}>
+    <div style={{ 'height': '75vh', 'overflowY': 'scroll' }}>
       {user_cards()}
     </div>
   </div>;

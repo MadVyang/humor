@@ -22,7 +22,7 @@ const UserCard = (props: any) => {
       </div> */}
       <div>
         <span style={{ fontSize: 15, verticalAlign: 'top' }}>
-          {String(user.score).substring(0, 3)}
+          {Number(user.score).toFixed(2)}
         </span>
         {' '}
         <Rating defaultValue={Number(user.score)} precision={0.1} readOnly size="small" style={{ position: 'relative', top: '1px' }} />

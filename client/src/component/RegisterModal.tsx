@@ -9,6 +9,8 @@ import { getUsers, postHumor } from '../api/api';
 const RegisterModal = (props: any) => {
   const [users, set_users] = useState([]);
   const [selected_user_id, set_selected_user_id] = useState('0');
+  const [img, set_img] = useState<any>();
+  const [img_src, set_img_src] = useState<string>('');
   const [humor, set_humor] = useState('');
   const [score, set_score] = useState(5);
 
@@ -21,21 +23,48 @@ const RegisterModal = (props: any) => {
     load();
   }, []);
 
+  useEffect(() => {
+    set_img(null);
+    set_img_src('');
+    set_humor('');
+    set_score(5);
+  }, [props]);
+
   const userOptions = useCallback(() => {
     return users.map((user: any) => <option key={user.id} value={user.id}>{user.name}</option>);
   }, [users]);
 
+  const imgOnChange = useCallback((e: any) => {
+    const img_file = (e.target as HTMLInputElement).files?.[0];
+    const fr = new FileReader();
+    fr.onload = function () {
+      set_img_src(String(fr.result));
+    }
+    if (img_file) fr.readAsDataURL(img_file);
+    set_img(img_file);
+  }, []);
+
   const register = useCallback(() => {
-    if (humor.trim() === '') {
-      set_humor('');
+    if (humor.trim() === '' && img_src === '') {
+      if (humor.trim() === '')
+        set_humor('');
       return;
     }
     async function load() {
-      await postHumor(selected_user_id, humor.trim(), score);
+      let form_data = new FormData();
+      form_data.append('user_id', selected_user_id);
+      form_data.append('img', img);
+      form_data.append('humor', humor.trim());
+      form_data.append('score', String(score));
+      await postHumor(form_data);
     }
     load();
     props.onHide();
-  }, [selected_user_id, humor, score, props]);
+    set_img(null);
+    set_img_src('');
+    set_humor('');
+    set_score(5);
+  }, [selected_user_id, img, img_src, humor, score, props]);
 
   return <Modal {...props} centered>
     <Modal.Header closeButton>
@@ -52,11 +81,17 @@ const RegisterModal = (props: any) => {
           {userOptions()}
         </Form.Select>
       </div>
-      <FloatingLabel label="Humor">
+      <Form.Group controlId="formFile" className="mb-3">
+        <Form.Label>Select humor image</Form.Label>
+        <Form.Control type="file" accept="image/png, image/jpeg" onChange={imgOnChange} />
+      </Form.Group>
+      {img_src !== '' ? <div className='mb-2' style={{ height: '200px', overflowY: 'scroll' }}>
+        <img src={img_src} alt='humor img' width='100%' height='auto'></img>
+      </div> : ''}
+      <FloatingLabel label="Humor description">
         <Form.Control
           as="textarea"
-          placeholder={`Leave his humor here`}
-          style={{ height: '200px' }}
+          style={{ height: '70px' }}
           onChange={e => { set_humor(e.target.value); }}
         />
         <Form.Control.Feedback>Good</Form.Control.Feedback>

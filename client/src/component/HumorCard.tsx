@@ -1,13 +1,29 @@
 import Card from 'react-bootstrap/Card';
 import { Rating } from '@mui/material';
 import { FaQuoteLeft } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { getHumorImg } from '../api/api';
 
 
 const HumorCard = (props: any) => {
   const { humor } = props;
+  const [img_src, set_img_src] = useState<string>('');
+
+  useEffect(() => {
+    if (humor.img_path === null || humor.img_path === '') return;
+    async function load() {
+      const res = await getHumorImg(humor.img_path);
+      const url = window.URL.createObjectURL(new Blob([res.data], { type: res.headers['content-type'] }));
+      set_img_src(String(url));
+    }
+    load();
+  }, [humor]);
 
   return <Card className='mb-2 d-grid'>
     <Card.Body>
+      {img_src !== '' ? <div className='mb-4' style={{ height: '200px', overflowY: 'scroll' }}>
+        <img src={img_src} alt='humor img' width='100%' height='auto'></img>
+      </div> : ''}
       <FaQuoteLeft className='mb-3' />
       <div style={{ whiteSpace: "pre-line" }}>
         {humor.content}

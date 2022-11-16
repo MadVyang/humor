@@ -36,13 +36,28 @@ export async function getHumorsByUser(user_id: string | undefined): Promise<any[
   }
   return [];
 };
-export async function postHumor(user_id: string, humor: string, score: Number): Promise<any> {
+
+export async function postHumor(form_data: FormData): Promise<any> {
   try {
-    const body = { user_id: user_id, humor: humor, score: score };
-    await axios.post(info.url + `/humor`, body, { headers: { 'Content-Type': 'application/json' } });
+    await axios.post(info.url + `/humor`, form_data, { headers: { 'Content-Type': 'multipart/form-data' } });
     return true;
   } catch (err) {
     console.log(err);
   }
   return false;
+};
+
+export async function getHumorImg(img_path: string): Promise<any> {
+  // console.log(`/humor/img/${img_path}`)
+  try {
+    const res = await axios.get(info.url + `/humor/img`, {
+      params: {
+        img_path: img_path
+      }, responseType: 'blob'
+    });
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+  return [];
 };

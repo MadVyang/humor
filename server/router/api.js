@@ -1,4 +1,4 @@
-export default (app, db) => {
+export default (app, db, upload) => {
   app.get('/api/user/:user_id', async (req, res) => {
     try {
       const result = await db.getUser(req.params.user_id);
@@ -29,13 +29,26 @@ export default (app, db) => {
     }
   });
 
-  app.post('/api/humor', async (req, res) => {
+  app.post('/api/humor', upload.fields([{ name: 'user_id' }, { name: 'img' }, { name: 'humor' }, { name: 'score' }]), async (req, res) => {
     try {
       const { user_id, humor, score } = req.body;
-      await db.postHumor(user_id, humor, score);
+      let img_path = '';
+      if (req.files['img'].length > 0) {
+        img_path = 'uploads/' + req.files['img'][0].filename;
+      }
+      await db.postHumor(user_id, humor, score, img_path);
       res.sendStatus(200);
     } catch (error) {
-      console.log('getUser', error);
+      console.log('postHumor', error);
+      res.sendStatus(400);
+    }
+  });
+
+  app.get('/api/humor/img', async (req, res) => {
+    try {
+      res.sendFile(process.cwd() + '/' + req.query.img_path);
+    } catch (error) {
+      console.log('getHumorImg', error);
       res.sendStatus(400);
     }
   });
